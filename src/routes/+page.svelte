@@ -1,9 +1,7 @@
 <script>
     let fileContent = '';
     let selectedDate = new Date().toISOString().split('T')[0];
-    let dateOptions = [
-		'2024-07-31'
-	];
+    let dateOptions = [];
 
 
     async function fetchFileContent(date) {

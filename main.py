@@ -1,7 +1,8 @@
 import requests
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 from bs4 import BeautifulSoup
+import re
 
 header = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36"
@@ -28,6 +29,35 @@ def get_melon_chart():
         print('멜론 차트 데이터를 가져오는 데 실패했습니다:', e)
         return [], []
 
+def generate_date_options():
+    current_date = datetime.now()
+    dates = [(current_date - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(30)]
+    return dates
+
+def update_html_date_options(html_file_path):
+    date_options = generate_date_options()
+    
+    with open(html_file_path, 'r+', encoding='utf-8') as file:
+        content = file.read()
+        
+        match = re.search(r'let dateOptions = \[([^\]]*)\];', content)
+        if match:
+            current_options = match.group(1).strip()
+            if current_options:
+                current_options = set(current_options.split(', '))
+            else:
+                current_options = set()
+            
+            new_dates = set(date_options)
+            updated_dates = sorted(current_options.union(new_dates))
+
+            new_date_options = ', '.join(f'"{date}"' for date in updated_dates)
+            updated_content = re.sub(r'let dateOptions = \[([^\]]*)\];', f'let dateOptions = [{new_date_options}];', content)
+            
+            file.seek(0)
+            file.write(updated_content)
+            file.truncate()
+
 charts = []
 charts_web = []
 
@@ -41,3 +71,5 @@ with open(f'static/melon/{datetime.now().strftime("%Y-%m-%d")}.pm', 'w', encodin
     f.write("".join(charts_web))
 
 upload_gitAction("".join(charts))
+
+update_html_date_options("src/routes/+page.svelte")
