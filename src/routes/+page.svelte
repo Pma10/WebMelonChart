@@ -1,25 +1,23 @@
 <script>
     let fileContent = '';
     let selectedDate = new Date().toISOString().split('T')[0];
-    let dateOptions = [];
-
-
+    
     async function fetchFileContent(date) {
         try {
             const response = await fetch(`melon/${date}.pm`);
             if (response.status !== 200) {
-                throw new Error('파일을 찾을 수 없습니다.');
+                throw new Error('해당하는 날짜의 멜론차트가 정보가 없습니다.');
             }
             fileContent = await response.text();
         } catch (error) {
-            fileContent = `에러발생: ${error.message}`;
+            fileContent = `해당하는 날짜의 멜론차트가 정보가 없습니다.`;
         }
     }
 
-    function handleSelectChange(event) {
+    function handleDateChange(event) {
         selectedDate = event.target.value;
-        if (selectedDate === 'none') {
-			fileContent = '';
+        if (!selectedDate) {
+            fileContent = '';
             return;
         }
         fetchFileContent(selectedDate);
@@ -33,12 +31,7 @@
 
 <section>
     <div class="main-form">
-        <select name="date" class="sel-form" on:change="{handleSelectChange}">
-            <option value="none">선택하기</option>
-            {#each dateOptions as date}
-                <option value="{date}">{date}</option>
-            {/each}
-        </select>
+        <input type="date" class="date-input" on:change="{handleDateChange}">
         <div class="file-content">
             {@html fileContent}
         </div>
@@ -55,7 +48,7 @@
         flex-direction: column;
     }
 
-    .sel-form {
+    .date-input {
         background-color: #f0f0f0;
         border: 2px solid #6ec953;
         border-radius: 0.5em;
@@ -65,10 +58,10 @@
         cursor: pointer;
         width: 200px;
         transition: background-color 0.3s, border-color 0.3s;
-		margin-top: 3em;
+        margin-top: 3em;
     }
 
-    .sel-form:focus {
+    .date-input:focus {
         outline: none;
         background-color: #e0ffe0;
         border-color: #4caf50;
