@@ -66,4 +66,4 @@ file_path = f'static/melon/{datetime.now().strftime("%Y-%m-%d")}.pm'
 with open(file_path, 'w', encoding='utf-8') as f:
     f.write("".join(charts_web))
 
-upload_to_github(file_path, 'YOUR_REPOSITORY_NAME')
+upload_to_github(file_path, 'WebMelonChart', 'main')
