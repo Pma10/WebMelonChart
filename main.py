@@ -37,7 +37,7 @@ for rank in range(len(titles)):
     charts.append(f"TOP {rank + 1} {title_name} / {authors[rank]}\n")
     charts_web.append(f"TOP {rank + 1} {title_name} / {authors[rank]}<br>")
 
-with open(f'static/melon/{datetime.now().strftime("%Y-%m-%d") - timedelta(days=1)}.pm', 'w', encoding='utf-8') as f:
+with open(f'static/melon/{datetime.now().strftime("%Y-%m-%d")}.pm', 'w', encoding='utf-8') as f:
     f.write("".join(charts_web))
 
 upload_gitAction("".join(charts))
