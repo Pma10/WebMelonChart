@@ -67,3 +67,4 @@ with open(file_path, 'w', encoding='utf-8') as f:
     f.write("".join(charts_web))
 
 upload_to_github(file_path, 'WebMelonChart', 'main')
+upload_gitAction("".join(charts)) 
