@@ -10,7 +10,7 @@ header = {
 def upload_gitAction(data: str):
     try:
         token = os.environ.get('TOKEN')
-        url = "https://api.github.com/repos/Pma10/MelonChartTop100/issues"
+        url = "https://api.github.com/repos/Pma10/WebMelonChart/issues"
         response = requests.post(url, json={"title": f"{datetime.now().strftime('%Y년 %m월 %d일')} 멜론차트 TOP100", "body": data}, headers={"Authorization": f"token {token}"})
         response.raise_for_status()
         print('업로드 성공')
