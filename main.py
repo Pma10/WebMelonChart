@@ -16,11 +16,11 @@ def upload_gitAction(data: str):
         print('업로드 성공')
     except requests.exceptions.RequestException as e:
         print('업로드 실패:', e)
-        
+
 def upload_to_github(file_path: str, repo: str, branch: str = 'main'):
     try:
         token = os.environ.get('TOKEN')
-        username = os.environ.get('GITHUB_USERNAME')
+        username = "Pma10"
         commit_message = f"{datetime.now().strftime('%Y-%m-%d')} 멜론차트 업데이트"
         
         with open(file_path, 'rb') as file:
