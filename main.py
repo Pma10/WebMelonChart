@@ -62,7 +62,7 @@ for rank in range(len(titles)):
     charts.append(f"TOP {rank + 1} {title_name} / {authors[rank]}\n")
     charts_web.append(f"TOP {rank + 1} {title_name} / {authors[rank]}<br>")
 
-file_path = f'static/melon/{datetime.now().strftime("%Y-%m-%d")}.pm'
+file_path = f'static/melon/{datetime.now().strftime("%Y-%m-%d")}.melon'
 with open(file_path, 'w', encoding='utf-8') as f:
     f.write("".join(charts_web))
 
