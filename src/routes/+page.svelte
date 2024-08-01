@@ -6,11 +6,11 @@
         try {
             const response = await fetch(`melon/${date}.melon`);
             if (response.status !== 200) {
-                throw new Error('해당하는 날짜의 멜론차트가 정보가 없습니다.');
+                throw new Error('해당하는 날짜의 멜론차트 정보가 없습니다.');
             }
             fileContent = await response.text();
         } catch (error) {
-            fileContent = `해당하는 날짜의 멜론차트가 정보가 없습니다.`;
+            fileContent = `해당하는 날짜의 멜론차트 정보가 없습니다.`;
         }
     }
 
